@@ -1,0 +1,42 @@
+version: '3.4'
+
+services:
+  pyapi:
+    networks:
+      - internal
+    restart: unless-stopped
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./:/app
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+  nginx:
+    depends_on:
+      - pyapi
+    networks:
+      - internal
+    restart: unless-stopped
+    image: nginx:1.25.0
+    ports:
+      - "443:443"
+      - "80:80"
+    volumes:
+      - ./ssl:/etc/ssl
+      - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "10"
+
+
+networks:
+  internal:
+
+
+

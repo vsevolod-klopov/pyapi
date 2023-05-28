@@ -1,0 +1,5 @@
+.vscode
+.dockerignore
+.env
+pycache
+ssl
