@@ -30,12 +30,11 @@ def signJWT(user_id: str) -> Dict[str, str]:
 
 def decodeJWT(token: str) -> dict:
     try:
-        decoded_token = jwt.decode(token, settings.SECRET_KEY, settings.ALGORITHM)
-        print(decoded_token["user_id"])
+        decoded_token = jwt.decode(token, settings.SECRET_KEY, algorithms=[settings.ALGORITHM])
         return decoded_token if decoded_token["expires"] >= time.time() else None
     except:
         return {}
-    
+
 
 def GetIdJWT(token:str) -> int:
     return decodeJWT(token)["user_id"]

@@ -7,9 +7,16 @@ from User import UserLoginSchema, UserSignUp, Push_User_to_DB ,User_check_DB,Use
 import car
 from auth_bearer import JWTBearer
 from auth_handler import signJWT , GetIdJWT
+from fastapi.middleware.cors import CORSMiddleware
 
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=['*']
+)
+
 
 
 def check_user_login(data):
